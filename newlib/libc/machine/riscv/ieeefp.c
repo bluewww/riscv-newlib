@@ -11,7 +11,7 @@
 
 #include <ieeefp.h>
 
-#ifdef __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
 static void
 fssr(unsigned value)
 {
@@ -40,7 +40,7 @@ frm_fp_rnd (unsigned frm)
     }
 }
 
-#endif /* __riscv_flen */
+#endif /* __riscv_flen || __riscv_zfinx*/
 
 fp_except
 fpgetmask(void)
@@ -51,22 +51,22 @@ fpgetmask(void)
 fp_rnd
 fpgetround(void)
 {
-#ifdef __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
   unsigned rm = (frsr () >> 5) & 0x7;
   return frm_fp_rnd (rm);
 #else
   return FP_RZ;
-#endif /* __riscv_flen */
+#endif /* __riscv_flen || __riscv_zfinx */
 }
 
 fp_except
 fpgetsticky(void)
 {
-#ifdef __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
   return frsr () & 0x1f;
 #else
   return 0;
-#endif /* __riscv_flen */
+#endif /* __riscv_flen || __riscv_zfinx */
 }
 
 fp_except
@@ -78,7 +78,7 @@ fpsetmask(fp_except mask)
 fp_rnd
 fpsetround(fp_rnd rnd_dir)
 {
-#ifdef __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
   unsigned fsr = frsr ();
   unsigned rm = (fsr >> 5) & 0x7;
   unsigned new_rm;
@@ -94,17 +94,17 @@ fpsetround(fp_rnd rnd_dir)
   return frm_fp_rnd (rm);
 #else
   return -1;
-#endif /* __riscv_flen */
+#endif /* __riscv_flen || __riscv_zfinx */
 }
 
 fp_except
 fpsetsticky(fp_except sticky)
 {
-#ifdef __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
   unsigned fsr = frsr ();
   fssr (sticky & 0x1f | fsr & ~0x1f);
   return fsr & 0x1f;
 #else
   return -1;
-#endif /* __riscv_flen */
+#endif /* __riscv_flen || __riscv_zfinx */
 }

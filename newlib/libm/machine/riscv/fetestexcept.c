@@ -47,7 +47,7 @@
 int fetestexcept(int excepts)
 {
 
-#if __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
 
   /* Mask excepts to be sure only supported flag bits are set */
 

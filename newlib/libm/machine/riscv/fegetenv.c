@@ -47,7 +47,7 @@
 int fegetenv(fenv_t *envp)
 {
 
-#if __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
 
   /* Get the current environment (FCSR) */
 

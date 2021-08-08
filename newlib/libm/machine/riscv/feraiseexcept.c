@@ -58,7 +58,7 @@ int feraiseexcept(int excepts)
 
   excepts &= FE_ALL_EXCEPT;
 
-#if __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
 
   /* Set the requested exception flags */
 

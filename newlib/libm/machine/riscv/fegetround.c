@@ -45,7 +45,7 @@
 int fegetround()
 {
 
-#if __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
 
   /* Get current rounding mode */
 

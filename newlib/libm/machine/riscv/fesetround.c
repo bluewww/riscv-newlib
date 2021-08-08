@@ -48,7 +48,7 @@
 int fesetround(int round)
 {
 
-#if __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
 
   /* Mask round to be sure only valid rounding bits are set */
 

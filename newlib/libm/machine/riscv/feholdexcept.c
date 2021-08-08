@@ -49,7 +49,7 @@
 int feholdexcept(fenv_t *envp)
 {
 
-#if __riscv_flen
+#if defined(__riscv_flen) || defined(__riscv_zfinx)
 
   /* Store the current FP environment in envp*/
 
